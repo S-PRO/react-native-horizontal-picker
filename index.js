@@ -16,11 +16,11 @@ const ESTIMATED_ITEM_WIDTH = 30;
 // Defaults
 const defaultItemStyle = {
   fontSize: 18,
-  fontWeight: '400',
+  // fontWeight: '400',
   color: '#666',
 };
 const defaultSelectedItemStyle = {
-  fontWeight: '600',
+  // fontWeight: '600',
   color: '#000',
 };
 const defaultItemSpacing = 40;
@@ -347,14 +347,22 @@ export default class HorizontalPicker extends React.Component {
 
               let isSecond = false;
               let isThird = false;
+              let isFourth = false;
 
               if  (!isSelected && (arr[i-1]&&(arr[i-1].value === currentValue) || arr[i+1]&&(arr[i+1].value === currentValue))) {
                 isSecond = true;
                 isThird = false;
+                isFourth = false;
               } else if  (!isSelected && (arr[i-2]&& (arr[i-2].value === currentValue) || arr[i+2]&&(arr[i+2].value === currentValue))) {
                 isSecond = false;
                 isThird = true;
+                isFourth = false;
+              } else if  (!isSelected && (arr[i-3]&& (arr[i-3].value === currentValue) || arr[i+3]&&(arr[i+3].value === currentValue))) {
+                isSecond = false;
+                isThird = false;
+                isFourth = true;
               }
+
               const offsetFromLeft = this.state.itemPositions[item.index] || 0;
               return (
                 <View key={item.value} style={{ position: 'absolute', top: 0, left: 0, transform: [{ translateX: offsetFromLeft }] }}>
@@ -364,6 +372,7 @@ export default class HorizontalPicker extends React.Component {
                     selectedItemIndex={selectedItemIndex}
                     isSecond={isSecond}
                     isThird={isThird}
+                    isFourth={isFourth}
                     label={item.label}
                     enabled={enabled}
                     onSelect={() => this.props.onValueChange(item.value, item.index)}
@@ -430,6 +439,7 @@ class InternalItem extends React.Component {
 
       nextProps.isSecond !== this.props.isSecond ||
       nextProps.isThird !== this.props.isThird ||
+      nextProps.isFourth !== this.props.isFourth ||
       // since function props (onSelect, onLayout) realistically will only change iff index changes,
       // we can compare idx to avoid comparing functions (which will never be equal anyway)
       nextProps.idx !== this.props.idx
@@ -457,6 +467,7 @@ class InternalItem extends React.Component {
       selectedItemIndex,
       isSecond,
       isThird,
+      isFourth
     } = this.props;
 
     let calculatedItemStyle = itemStyle;
@@ -464,7 +475,7 @@ class InternalItem extends React.Component {
     if (isSecond) {
       calculatedItemStyle = secondItemStyle;
     }
-    if (isThird) {
+    if (isThird || isFourth) {
       calculatedItemStyle = thirdItemStyle
     }
 
