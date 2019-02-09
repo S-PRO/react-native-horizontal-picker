@@ -206,7 +206,7 @@ export default class HorizontalPicker extends React.Component {
     }));
   }
   getCurrentItem() {
-    return this.getItems().find(x => x.value === this.props.selectedValue);
+    return this.getItems().find(x => x.index === this.props.selectedItemIndex);
   }
   getCurrentItemIndex() {
     const currentItem = this.getCurrentItem();
