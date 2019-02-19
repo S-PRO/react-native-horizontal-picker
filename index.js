@@ -187,11 +187,21 @@ export default class HorizontalPicker extends React.Component {
     this.setState(state => {
       const itemWidths = [...state.itemWidths];
       itemWidths[idx] = itemWidth;
-      return {
-        ...state,
-        itemWidths,
-      };
-    }, this.recalculateExpensive);
+
+      this.itemWidths = itemWidths
+      
+      if (this.itemWidths.length === this.props.children.length ) {
+        return {
+          ...state,
+          itemWidths,
+        };
+      }
+      
+    }, () => {
+      if (this.itemWidths.length === this.props.children.length ) {
+        this.recalculateExpensive();
+      }
+    });
   }
 
   getItemSpacing() {
