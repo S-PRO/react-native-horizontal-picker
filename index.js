@@ -9,9 +9,9 @@ import {
 
 // Constants
 const USE_NATIVE_DRIVER = false;
-const VIRTUALIZATION_THRESHOLD = 110; // virtualize the list if there are more than this number of items
+const VIRTUALIZATION_THRESHOLD = 205; // virtualize the list if there are more than this number of items
 const VIRTUALIZATION_BUFFER = 20; // render this many items to the left & to the right of the current item. don't render the rest
-const ESTIMATED_ITEM_WIDTH = 30;
+const ESTIMATED_ITEM_WIDTH = 40;
 
 // Defaults
 const defaultItemStyle = {
