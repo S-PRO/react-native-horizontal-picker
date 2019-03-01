@@ -5,13 +5,14 @@ import {
   Animated,
   PanResponder,
   TouchableWithoutFeedback,
+  Platform
 } from 'react-native';
 
 // Constants
 const USE_NATIVE_DRIVER = false;
-const VIRTUALIZATION_THRESHOLD = 205; // virtualize the list if there are more than this number of items
-const VIRTUALIZATION_BUFFER = 20; // render this many items to the left & to the right of the current item. don't render the rest
-const ESTIMATED_ITEM_WIDTH = 40;
+const VIRTUALIZATION_THRESHOLD = Platform.OS === "ios" ? 120 : 220; // virtualize the list if there are more than this number of items
+const VIRTUALIZATION_BUFFER = 40; // render this many items to the left & to the right of the current item. don't render the rest
+const ESTIMATED_ITEM_WIDTH = 60;
 
 // Defaults
 const defaultItemStyle = {
@@ -23,6 +24,15 @@ const defaultSelectedItemStyle = {
   // fontWeight: '600',
   color: '#000',
 };
+
+const commonTextStyle = {
+  width: 60,
+  alignSelf: "center",
+  flexDirection: "row",
+  justifyContent: "center",
+  textAlign: "center"
+}
+
 const defaultItemSpacing = 40;
 
 export default class HorizontalPicker extends React.Component {
@@ -493,10 +503,10 @@ class InternalItem extends React.Component {
       <View style={{ marginRight: !isLast ? itemSpacing : 0 }}>
         <TouchableWithoutFeedback onPress={enabled !== false ? onSelect : null}>
           <View>
-            <Text style={[{ paddingVertical: 10 }, defaultItemStyle, calculatedItemStyle, defaultSelectedItemStyle, selectedItemStyle, { opacity: isSelected ? 1 : 0 }]} onLayout={onLayout}>
+            <Text style={[{ paddingVertical: 10 }, defaultItemStyle, calculatedItemStyle, defaultSelectedItemStyle, selectedItemStyle, commonTextStyle, { opacity: isSelected ? 1 : 0 }]} onLayout={onLayout}>
               {label}
             </Text>
-            <Text style={[{ paddingVertical: 10, position: 'absolute', top: 0, left: 0, bottom: 0, right: 0 }, defaultItemStyle, calculatedItemStyle, { opacity: isSelected ? 0 : 1 }]}>
+            <Text style={[{ paddingVertical: 10, position: 'absolute', top: 0, left: 0, bottom: 0, right: 0 }, defaultItemStyle, calculatedItemStyle, commonTextStyle, { opacity: isSelected ? 0 : 1 }]}>
               {label}
             </Text>
           </View>
