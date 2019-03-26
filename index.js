@@ -9,7 +9,7 @@ import {
 } from 'react-native';
 
 // Constants
-const USE_NATIVE_DRIVER = false;
+const USE_NATIVE_DRIVER = true;
 const VIRTUALIZATION_THRESHOLD = Platform.OS === "ios" ? 120 : 220; // virtualize the list if there are more than this number of items
 const VIRTUALIZATION_BUFFER = 40; // render this many items to the left & to the right of the current item. don't render the rest
 const ESTIMATED_ITEM_WIDTH = 60;
@@ -48,9 +48,9 @@ export default class HorizontalPicker extends React.Component {
     itemPositions: [], // x position of all items
     translateXs: [], // translateX values to center a given item
     hoveredItemValue: null, // which item value is currently being 'hovered', i.e. during the swipe
-
   };
 
+  timerLoaderId = false
   // store dx of the current swipe as a number
   swipeDX = 0;
   // and as an animated value to drive the swipe animation
@@ -186,7 +186,24 @@ export default class HorizontalPicker extends React.Component {
     Animated.spring(this._selectedIdx, {
       toValue: currentIndex,
       useNativeDriver: USE_NATIVE_DRIVER,
-    }).start();
+    }).start(() => {
+
+      if (this.timerLoaderId) {
+        clearTimeout(this.timerLoaderId);
+      }
+      
+      this.timerLoaderId = setTimeout(() => {
+        
+        const {
+          callbackHideLoader
+        } = this.props;
+
+        if (callbackHideLoader) {
+          callbackHideLoader();
+        }
+        
+      }, 500);
+    });
   }
 
   handleLayout = (evt) => {
