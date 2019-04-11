@@ -12,7 +12,7 @@ import {
 const USE_NATIVE_DRIVER = true;
 const VIRTUALIZATION_THRESHOLD = Platform.OS === "ios" ? 120 : 220; // virtualize the list if there are more than this number of items
 const VIRTUALIZATION_BUFFER = 40; // render this many items to the left & to the right of the current item. don't render the rest
-const ESTIMATED_ITEM_WIDTH = 65;
+const ESTIMATED_ITEM_WIDTH = 70;
 
 // Defaults
 const defaultItemStyle = {
@@ -26,7 +26,7 @@ const defaultSelectedItemStyle = {
 };
 
 const commonTextStyle = {
-  width: 60,
+  width: 70,
   alignSelf: "center",
   flexDirection: "row",
   justifyContent: "center",
