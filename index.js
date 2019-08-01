@@ -33,7 +33,7 @@ const commonTextStyle = {
   textAlign: "center"
 }
 
-const defaultItemSpacing = 40;
+const defaultItemSpacing = 20;
 
 export default class HorizontalPicker extends React.Component {
   state = {
